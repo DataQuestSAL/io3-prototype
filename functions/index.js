@@ -26,8 +26,7 @@ exports.notRegistered = functions.https.onRequest((request, response) => {
        const projectsRef = admin.database().ref('notRegistered/');
        projectsRef.push({'token':data});
        console.log(obj);
-       response.send("done");
-       return obj;
+       response.send(obj)
 
    }
 
