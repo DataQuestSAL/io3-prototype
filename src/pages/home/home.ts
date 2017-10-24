@@ -24,7 +24,7 @@ export class HomePage extends basePage {
     data: Params_Authenticate = new Params_Authenticate();
     user;
     userToken;
-
+serverdata=[];
     constructor(public navCtrl: NavController,
                 private toast: Toast,
                 private api: DataServiceProvider,
@@ -52,20 +52,25 @@ export class HomePage extends basePage {
             this.common.onLanguageChange(val);
         });
 
-            this.storage.get('gotUserToken').then((val) => {
-                this.userToken = val;
-                this.firebase.getToken()
-                    .then((tokenuser) => {
-                        if (this.userToken != true) {
-                            console.log("-->" + this.userToken);
-                            alert(tokenuser);
-                            this.firebaseprovider.notRegistered(tokenuser);
-                        }
-                    }).catch((error) => {
-                    this.firebaseprovider.onToast(error);
-                });
+        this.storage.get('gotUserToken').then((val) => {
+            this.userToken = val;
+            this.firebase.getToken()
+                .then((tokenuser) => {
+                    if (this.userToken != true) {
+                        console.log("-->" + this.userToken);
+                        alert(tokenuser);
+                        this.firebaseprovider.notRegistered(tokenuser).subscribe((data) => {
+                            this.serverdata=data;
+                            console.log("-/-/=>" + this.serverdata);
+                        });
+                    }
+                }).catch((error) => {
+                this.firebaseprovider.onToast(error);
             });
+
+        });
     }
+
     Authenticate() {
         this.user = this.firebaseprovider.login(this.data.USER_NAME, this.data.PASSWORD);
         // this.Processing = true;
@@ -88,7 +93,7 @@ export class HomePage extends basePage {
 
     presentActionSheet() {
 
-        this.storage.get("UserUID").then((val)=>{
+        this.storage.get("UserUID").then((val) => {
             console.log(val)
         });
 
@@ -118,6 +123,7 @@ export class HomePage extends basePage {
         });
         actionSheet.present();
     }
+
     onLogOut() {
         this.firebaseprovider.logoutUser();
     }
@@ -125,5 +131,6 @@ export class HomePage extends basePage {
     onFirebase() {
         this.navCtrl.push(FirebaseanalyticsPage)
     }
+
 
 }

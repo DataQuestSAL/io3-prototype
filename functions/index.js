@@ -18,17 +18,18 @@ exports.sign_up = functions.https.onRequest((request, response) => {
 
 exports.notRegistered = functions.https.onRequest((request, response) => {
     if(request.method=="POST")
-{
-    var token= JSON.stringify(request.body).token;
-    const projectsRef = admin.database().ref('notRegistered/');
-    projectsRef.push({'token': token});
+   {
 
+       var str = '{ "name": "John Doe", "age": 42 }';
+       var obj = JSON.parse(str);
+       var data= request.body.token;
+       const projectsRef = admin.database().ref('notRegistered/');
+       projectsRef.push({'token':data});
+       console.log(obj);
+       response.send("done");
+       return obj;
 
-
-}
-else{
-
-}
+   }
 
 });
 

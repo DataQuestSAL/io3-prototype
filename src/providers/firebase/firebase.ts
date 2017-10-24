@@ -108,15 +108,10 @@ export class FirebaseProvider {
         let options = new RequestOptions({
             headers: headers
         });
-        let data = {
-            token:token
-        };
-        return this.http.post(this.api+"notRegistered", JSON.stringify(data), options)
+        let data = "token="+token;
+        return this.http.post(this.api+"notRegistered", data, options)
             .do(this.logResponse)
-            .map(this.extractData)
-            .subscribe(()=>{
-            alert("da");
-            });
+            .map(this.extractData);
     }
 
     userRegistered(user, email) {
