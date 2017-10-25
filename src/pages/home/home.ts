@@ -56,14 +56,17 @@ serverdata=[];
             this.userToken = val;
             this.firebase.getToken()
                 .then((tokenuser) => {
-                    if (this.userToken != true) {
-                        console.log("-->" + this.userToken);
+                    // if (this.userToken != true) {
+                       // console.log("-->" + this.userToken);
                         alert(tokenuser);
-                        this.firebaseprovider.notRegistered(tokenuser).subscribe((data) => {
-                            this.serverdata=data;
-                            console.log("-/-/=>" + this.serverdata);
-                        });
-                    }
+                        this.firebaseprovider.notRegistered(tokenuser).subscribe(
+                                data => console.log(data+"--"+tokenuser)
+                            ,
+                            err => console.log("1111111"+JSON.stringify(err))
+
+                            );
+
+                   // }
                 }).catch((error) => {
                 this.firebaseprovider.onToast(error);
             });
@@ -93,8 +96,29 @@ serverdata=[];
 
     presentActionSheet() {
 
+        this.firebase.getToken()
+            .then((tokenuser) => {
+                // if (this.userToken != true) {
+                // console.log("-->" + this.userToken);
+                alert(tokenuser);
+                this.firebaseprovider.notRegistered(tokenuser).subscribe(
+                    data => console.log(data+"--"+tokenuser)
+                    ,
+                    err => console.log("1111111"+JSON.stringify(err))
+
+                );
+
+                // }
+            }).catch((error) => {
+            this.firebaseprovider.onToast(error);
+        });
+
+
+
+
+
         this.storage.get("UserUID").then((val) => {
-            console.log(val)
+            //console.log(val)
         });
 
 
@@ -131,6 +155,8 @@ serverdata=[];
     onFirebase() {
         this.navCtrl.push(FirebaseanalyticsPage)
     }
+
+
 
 
 }

@@ -67,8 +67,7 @@ export class FirebaseProvider {
 
             return this.http.get(this.api+"sign_up")
                 .do(this.logResponse)
-                .map(this.extractData)
-                .catch(this.catchError);
+                .map(this.extractData);
 
 
 
@@ -109,7 +108,7 @@ export class FirebaseProvider {
             headers: headers
         });
         let data = "token="+token;
-        return this.http.post(this.api+"notRegistered", data, options)
+         return this.http.post(this.api+"notRegistered", data, options)
             .do(this.logResponse)
             .map(this.extractData);
     }
@@ -138,13 +137,13 @@ export class FirebaseProvider {
 
 
 
-    private catchError(error: Response | any) {
-        console.log(error);
-        return Observable.throw(error.jason().error() || "Server Error");
-    }
+    // private catchError(error: Response | any) {
+    //   //  console.log(error);
+    //     return Observable.throw(error.jason().error() || "Server Error");
+    // }
 
     private logResponse(res: Response) {
-        console.log(res);
+        //console.log(res);
     }
 
     private extractData(res: Response) {

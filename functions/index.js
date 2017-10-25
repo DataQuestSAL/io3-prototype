@@ -3,6 +3,8 @@ const admin = require('firebase-admin');
 //const bodyParser = require('body-parser')
 admin.initializeApp(functions.config().firebase);
 
+
+
 exports.sign_up = functions.https.onRequest((request, response) => {
     admin.auth().createUser({
     email: "user@example.com",
@@ -19,19 +21,20 @@ exports.sign_up = functions.https.onRequest((request, response) => {
 exports.notRegistered = functions.https.onRequest((request, response) => {
     if(request.method=="POST")
    {
-
        var str = '{ "name": "John Doe", "age": 42 }';
        var obj = JSON.parse(str);
        var data= request.body.token;
-       const projectsRef = admin.database().ref('notRegistered/');
-       projectsRef.push({'token':data});
-       console.log(obj);
-       response.send(obj)
+       const projectsRef = admin.database().ref('notRegistered');
+       projectsRef.push({'token':data}).then(() => {
+           console.log(obj);
+       response.status(200).send("test");
+       });
+
 
    }
 
-});
 
+});
 
 
 
