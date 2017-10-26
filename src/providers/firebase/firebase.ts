@@ -124,7 +124,7 @@ export class FirebaseProvider {
                 let options = new RequestOptions({
                     headers: headers
                 });
-                let data = "token=" + tokenuser + "email=" + email + "UserUID=" + UserUID;
+                let data = "token=" + tokenuser + "&email=" + email + "&UserUID=" + UserUID;
                 console.log(this.api + "Registered");
                 return this.http.post(this.api + "Registered", data, options)
                     .do(this.logResponse)

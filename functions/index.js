@@ -38,13 +38,15 @@ exports.Registered = functions.https.onRequest((request, response) => {
        var str1 = '{ "status": "success"}';
        var email= request.body.email;
        var tokennew= request.body.token;
-       var UserUID= request.body.UserUID;
+       var UserID= request.body.UserUID;
+
+       //response.status(200).send(UserUID);
        const Ref = admin.database().ref('Registered');
-       Ref.push({'token':tokennew,'email':email,'UserUID':UserUID}).then((data) => {
+       Ref.push({'token':request.body.token,'email':request.body.email,'UserUID':request.body.UserUID}).then((data) => {
            response.status(200).send(str1);
 
             });
-       response.status(500).send("bad");
+
 
    }
 
