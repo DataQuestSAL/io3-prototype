@@ -1,8 +1,19 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+
+
+const serviceAccount=require('./client-space-mobile-5ee7e5905d13.json');
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://client-space-mobile.firebaseio.com"
+});
 //const bodyParser = require('body-parser')
-admin.initializeApp(functions.config().firebase);
-exports.sign_up = functions.https.onRequest((request, response) => {
+//admin.initializeApp(functions.config().firebase);
+
+
+
+
+exports.sign_up = functions.https.onRequest(function (request, response) {
     admin.auth().createUser({
     email: "user@example.com",
     password: "secretPassword"
@@ -16,14 +27,14 @@ exports.sign_up = functions.https.onRequest((request, response) => {
 
 
 
-exports.notRegistered = functions.https.onRequest((request, response) => {
+exports.notRegistered = functions.https.onRequest(function (request, response) {
     if(request.method=="POST")
    {
        var str = '{ "status": "success"}';
       // var obj = JSON.parse(str);
        var token= request.body.token;
        const Ref = admin.database().ref('notRegistered');
-         Ref.push({'token':token}).then(() => {
+         Ref.push({'token':token}).then( function () {
        response.status(200).send(str);
        });
    }
@@ -32,7 +43,7 @@ exports.notRegistered = functions.https.onRequest((request, response) => {
 
 
 
-exports.Registered = functions.https.onRequest((request, response) => {
+exports.Registered = functions.https.onRequest(function (request, response) {
     if(request.method=="POST")
    {
        var str1 = '{ "status": "success"}';
@@ -50,6 +61,27 @@ exports.Registered = functions.https.onRequest((request, response) => {
 
    }
 
+});
+
+exports.CreateUserToken = functions.https.onRequest(function (request, response) {
+
+    var uids = "90QrIcjX9KdQG4cutVnrt9rRcxo2";
+    var str = '{ "status": customToken}';
+
+
+    var additionalClaims = {
+        premiumAccount: true
+    };
+
+
+
+    admin.auth().createCustomToken(uids,additionalClaims)
+        .then(function (token) {
+
+            response.status(200).send(JSON.stringify(token));
+        }).catch(function (error) {
+        response.status(200).send(JSON.stringify(error));
+    });
 
 });
 

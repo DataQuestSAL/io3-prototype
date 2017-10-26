@@ -70,23 +70,41 @@ export class FirebaseProvider {
     }
 
     login(Email: string, Password: string) {
-        return this.firebaseAuth.auth.signInWithEmailAndPassword(Email, Password).then((user) => {
-            this.storage.get('UserUID').then((key) => {
-                this.notregisteredlist.remove(key)
-                    .then((data) => {
-                        this.storage.get('hasSignIn').then((val) => {
-                            //if (val != true) {
-                            this.onToast(user.uid);
-                            this.userRegistered(user.uid, user.email);
-                            this.storage.set('hasSignIn', true)
-                            //}
-                        });
-                    });
+        //------------------------------------------Custom Authentication-------------------------------
+        console.log(this.api + "CreateUserToken");
+        return this.http.get(this.api + "CreateUserToken")
+            .do(this.logResponse)
+            .map(this.extractData)
+            .subscribe((data) => {
+               // alert(data);
+                this.firebaseAuth.auth.signInWithCustomToken(data).then((datas) => {
+                    alert(JSON.stringify(datas))
+                }).catch((err)=>{
+                    alert("auth err : "+ err)
+                })
+            }, (err) => {
+                alert(err);
             });
-        }).catch((err) => {
-            this.onToast(err.message);
-        });
+
+      //  ------------------------------------------signInWithEmailAndPassword-------------------------------
+      //   return this.firebaseAuth.auth.signInWithEmailAndPassword(Email, Password).then((user) => {
+      //       this.storage.get('UserUID').then((key) => {
+      //           this.notregisteredlist.remove(key)
+      //               .then((data) => {
+      //                   this.storage.get('hasSignIn').then((val) => {
+      //                       //if (val != true) {
+      //                       this.onToast(user.uid);
+      //                       this.userRegistered(user.uid, user.email);
+      //                       this.storage.set('hasSignIn', true)
+      //                       //}
+      //                   });
+      //               });
+      //       });
+      //   }).catch((err) => {
+      //       this.onToast(err.message);
+      //   });
     }
+
     notRegistered(token) {
         let headers = new Headers({
             'content-type': 'application/x-www-form-urlencoded'
