@@ -56,20 +56,25 @@ serverdata=[];
             this.userToken = val;
             this.firebase.getToken()
                 .then((tokenuser) => {
-                    // if (this.userToken != true) {
-                       // console.log("-->" + this.userToken);
-                        alert(tokenuser);
-                        this.firebaseprovider.notRegistered(tokenuser).subscribe(
-                                data => console.log(data+"--"+tokenuser)
-                            ,
-                            err => console.log("1111111"+JSON.stringify(err))
-
-                            );
-
-                   // }
+                     if (this.userToken != true) {
+                    alert(tokenuser);
+                    this.firebaseprovider.notRegistered(tokenuser).subscribe(
+                        (data) => {
+                            if(data.status=="success") {
+                                this.firebaseprovider.onToast("success notRegistered");
+                                this.storage.set("gotUserToken", true);
+                            }
+                        }
+                        ,
+                        (err) => {
+                            this.firebaseprovider.onToast("failed to notRegistered")
+                        }
+                    );
+                     }
                 }).catch((error) => {
                 this.firebaseprovider.onToast(error);
             });
+
 
         });
     }
@@ -95,33 +100,6 @@ serverdata=[];
     }
 
     presentActionSheet() {
-
-        this.firebase.getToken()
-            .then((tokenuser) => {
-                // if (this.userToken != true) {
-                // console.log("-->" + this.userToken);
-                alert(tokenuser);
-                this.firebaseprovider.notRegistered(tokenuser).subscribe(
-                    data => console.log(data+"--"+tokenuser)
-                    ,
-                    err => console.log("1111111"+JSON.stringify(err))
-
-                );
-
-                // }
-            }).catch((error) => {
-            this.firebaseprovider.onToast(error);
-        });
-
-
-
-
-
-        this.storage.get("UserUID").then((val) => {
-            //console.log(val)
-        });
-
-
         let english = this.translateService.instant('english');
         let arabic = this.translateService.instant('arabic');
         let language = this.translateService.instant('language');

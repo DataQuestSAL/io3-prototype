@@ -12,7 +12,6 @@ import 'rxjs/add/operator/catch';
 import {Observable} from 'rxjs/Observable'
 
 
-
 @Injectable()
 export class FirebaseProvider {
     // authListener;
@@ -21,7 +20,7 @@ export class FirebaseProvider {
     notregisteredlist;
     authListener;
     userId;
-    api="https://us-central1-client-space-mobile.cloudfunctions.net/";
+    api = "https://us-central1-client-space-mobile.cloudfunctions.net/";
 
     constructor(public http: Http,
                 public firebaseAuth: AngularFireAuth,
@@ -50,8 +49,6 @@ export class FirebaseProvider {
     }
 
 
-
-
     signup(email: string, password: string) {
 
         // this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password)
@@ -65,82 +62,91 @@ export class FirebaseProvider {
         // this.firebase.onTokenRefresh()
 
 
-            return this.http.get(this.api+"sign_up")
-                .do(this.logResponse)
-                .map(this.extractData);
-
+        return this.http.get(this.api + "sign_up")
+            .do(this.logResponse)
+            .map(this.extractData);
 
 
     }
 
-    login(newEmail: string, newPassword: string){
-        // return this.firebaseAuth.auth.signInWithEmailAndPassword(newEmail, newPassword).then((user) => {
-        //     this.onToast(user);
-        //     this.storage.get('UserUID').then((key) => {
-        //         this.notregisteredlist.remove(key)
-        //             .then((data) => {
-        //                 this.storage.get('hasSignIn').then((val) => {
-        //                     if (val != true) {
-        //                         this.userRegistered(user.uid, user.email);
-        //                         this.storage.set('hasSignIn',true)
-        //                     }
-        //                 });
-        //             });
-        //     });
-        // }).catch((err) => {
-        //     this.onToast(err.message);
-        // });
+    login(Email: string, Password: string) {
+        return this.firebaseAuth.auth.signInWithEmailAndPassword(Email, Password).then((user) => {
+            this.storage.get('UserUID').then((key) => {
+                this.notregisteredlist.remove(key)
+                    .then((data) => {
+                        this.storage.get('hasSignIn').then((val) => {
+                            //if (val != true) {
+                            this.onToast(user.uid);
+                            this.userRegistered(user.uid, user.email);
+                            this.storage.set('hasSignIn', true)
+                            //}
+                        });
+                    });
+            });
+        }).catch((err) => {
+            this.onToast(err.message);
+        });
     }
-
-
     notRegistered(token) {
-        // this.afDB.list('/notregistered').push({
-        //     tokenuser: token,
-        // }).then((data) => {
-        //     this.storage.set("gotUserToken", true);
-        //     this.getUserUID(data);
-        //     ///alert(data)
-        // });
         let headers = new Headers({
             'content-type': 'application/x-www-form-urlencoded'
         });
         let options = new RequestOptions({
             headers: headers
         });
-        let data = "token="+token;
-         return this.http.post(this.api+"notRegistered", data, options)
+        let data = "token=" + token;
+        return this.http.post(this.api + "notRegistered", data, options)
             .do(this.logResponse)
             .map(this.extractData);
     }
 
-    userRegistered(user, email) {
+    userRegistered(UserUID, email) {
+        // this.firebase.getToken()
+        //     .then((tokenuser) => {
+        //         this.afDB.list('/registered').push({
+        //             tokenuser: tokenuser,
+        //             userName: "danny",
+        //             UserUID: UserUID,
+        //             Email: email
+        //         }).then((data) => {
+        //             this.storage.set("gotUserToken", true);
+        //             this.getUserUID(data);
+        //             //alert(data)
+        //         });
+        //     }).catch((error) => {
+        //     this.onToast(error);
+        // });
         this.firebase.getToken()
             .then((tokenuser) => {
-                this.afDB.list('/registered').push({
-                    tokenuser: tokenuser,
-                    userName: "danny",
-                    UserUID: user,
-                    Email: email
-                }).then((data) => {
-                    this.storage.set("gotUserToken", true);
-                    this.getUserUID(data);
-                    //alert(data)
+                let headers = new Headers({
+                    'content-type': 'application/x-www-form-urlencoded'
                 });
+                let options = new RequestOptions({
+                    headers: headers
+                });
+                let data = "token=" + tokenuser + "email=" + email + "UserUID=" + UserUID;
+                console.log(this.api + "Registered");
+                return this.http.post(this.api + "Registered", data, options)
+                    .do(this.logResponse)
+                    .map(this.extractData)
+                    .subscribe((data) => {
+                        alert("all Want good")
+                    }, (err) => {
+                        alert(err);
+                    });
+
             }).catch((error) => {
             this.onToast(error);
         });
+
+
     }
 
 
-
-
-
-
-
-    // private catchError(error: Response | any) {
-    //   //  console.log(error);
-    //     return Observable.throw(error.jason().error() || "Server Error");
-    // }
+    private catchError(error: Response | any) {
+        //  console.log(error);
+        return Observable.throw(error.jason().error() || "Server Error");
+    }
 
     private logResponse(res: Response) {
         //console.log(res);
@@ -153,10 +159,12 @@ export class FirebaseProvider {
     logoutUser() {
         return this.firebaseAuth.auth.signOut();
     }
+
     getUserUID(data) {
         this.userId = data.key;
         this.storage.set("UserUID", this.userId);
     }
+
     onToast(data) {
         this.toast.show(JSON.stringify(data), '5000', 'top').subscribe();
     }
