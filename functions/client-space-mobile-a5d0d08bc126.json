@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "client-space-mobile",
+  "private_key_id": "a5d0d08bc1264abf011a0b706525aba634f15912",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDBqK+S0IBNfgoJ\n6w5ucl/iEiQQs1p1Ph0tSYZSQ5Be03r6Yi3+upLh7Rvfn0a3cqerX0K11om82cuA\n4wgQaY3TWGxaAa0h46zuz30UW6+kA3xZ3bnyO8qXpGJsMufkGhcQebdCqvfzhn/0\nlBYwHxV14ptQipSmN/C6jMJNKlGlYVpGdNsmp5ulhFMNalKAuRp8sF8tWVQbNwlO\nLDIrcMrS81j5Zze4aphxP2HC0cne8U/Tmzent7hIqf5FyO5+iv4Akdr5Rribgehp\nqbTX9peU+ezVBH4DVgW2tnKgnotUX4GJEG7Fr7/ckf878ef0qKsw9tFq/05FBDGE\nHObl238LAgMBAAECggEABFrF3vxgPjGH7FVmuHr8JJPhAOIOU5+TbusRhBvNW+oK\nxZtloyQLjlMOZCCcn+N2dt+b/YVyCQ0xI05e+e8xYBrhPv7fgAafAJc9RUamqk1b\ndKgpqeIXJlEUdLeKUgYCKcK3MxmvxAUKQv3WO5RkRri/idpJa3vfOhDLNTuu83Zc\naAXuSI4AZdqlbLA2Y3tROstauMtLsrg9ZzrsR9+vFYrmmQWxARjRevQRmaJZ2CFk\nH03bmj7D8I0pAFjMy8Ctct3PMyiqSa2IvZOOkdP3QSPQnCSPvT35GkIsgdHKlkCN\nbEA2e26m2DA+4AmgmcbUodsJ0FKZ0PvoZQa6P0seQQKBgQDuxQwsE9/padWbRlna\nzvZA8CYs9qZSRgVHEfxSGGhLvx/AvcPdBT9BtbRaXqYgDe15bGb8cF3fEV90xvxE\nzXubAfLhA5Ja+1wX1rLT5tgfQaw8V3IzI3Ker7PcMxzGtW2wK11zEJVQK+hcWE8m\nF7mpjFMCc+ERcvWnno4YRRe2ywKBgQDPokbNapd6S1l7HKuJl/tRcsgVauKS5CbM\nwcXYaaGJKRbtEULGoq79ezSbuXYO9PeUdOeLXn5skTaA6/m+m9uXKZdlEa0xQuD4\nRrDOD13Sl/M4HIN5NFoPBpnuDmQsDj15l61j9bCPhYZeAD7OLiUyC25hfmYnFZnN\nIVsO+uoQwQKBgH1k+rmDToqUzFuZnMLvAiCkfkgK2NpIb6kdZvfuXYe6PgDJKD3A\n7bGira7wGiqnZdno9kUI9iOaShlYD1BK4elMIrPNXmVtsLXMSWpDx6jSopOmERGO\nQjnYaIryROCOk6Z7f75YLTJHfOZScm688wJ58XZOSRsS1rRK7rEMSCH1AoGBAMSv\nQwSZQU6ui9/sQ64+UupPoatwKZreFscFk6WyQjvMuZPuMuQ4/SzPBgGxyFzYvqJZ\nr3C9HWM4l3m+j0B5IaVq16f8+6PbZ4KobBl2QvkXyWTQ1dX9uoXbSftQlKGLB77j\n6HL1LMB3ytXGw7fJzKBAZdpiwt+pPZ0sSLbDBvDBAoGBALFmR8oDqXzwVxbx96jj\nImeRNiVRIwL2D7enWxq2ZcNX9LZlMwK941Gl785EW7JFgzns4KWROIQjSByGl5dp\nU7QB5WM+QoPsEissuotjnCsT/38PaX/H/CKZ5UBKhVTGH8kOzzo9i6q2VGZsJ3QM\nl1+nSXo+gK3WVtRXzVqO+HZS\n-----END PRIVATE KEY-----\n",
+  "client_email": "client-space@client-space-mobile.iam.gserviceaccount.com",
+  "client_id": "117261351655373953953",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/client-space%40client-space-mobile.iam.gserviceaccount.com"
+}

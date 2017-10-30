@@ -71,12 +71,11 @@ export class FirebaseProvider {
 
     login(Email: string, Password: string) {
         //------------------------------------------Custom Authentication-------------------------------
-        console.log(this.api + "CreateUserToken");
         return this.http.get(this.api + "CreateUserToken")
             .do(this.logResponse)
             .map(this.extractData)
             .subscribe((data) => {
-               // alert(data);
+                alert(data);
                 this.firebaseAuth.auth.signInWithCustomToken(data).then((datas) => {
                     alert(JSON.stringify(datas))
                 }).catch((err)=>{

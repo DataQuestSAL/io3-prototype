@@ -18,5 +18,6 @@
     "PIN":"PIN",
     "Email":"Email",
     "Mobile":"Mobile",
-    "Cancel":"Cancel"
+    "Cancel":"Cancel",
+    "Rememberme":"Remember me?"
 }

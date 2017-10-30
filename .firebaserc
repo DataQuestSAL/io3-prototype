@@ -1,5 +1,6 @@
 {
   "projects": {
-    "client space": "client-space-mobile"
+    "client space": "client-space-mobile",
+    "default": "client-space-mobile"
   }
 }
