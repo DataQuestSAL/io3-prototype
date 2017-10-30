@@ -11,10 +11,6 @@
         <ion-item>
           <ion-input type="password" placeholder="{{ 'PasswordWord' | translate }}" id='Txt_PASSWORD' [(ngModel)]='data.PASSWORD'></ion-input>
         </ion-item>
-        <!--<ion-item>-->
-          <!--<ion-label>{{'Rememberme' | translate}}</ion-label>-->
-          <!--<ion-checkbox [(ngModel)]="Rememberme"></ion-checkbox>-->
-        <!--</ion-item>-->
         <button ion-button block (click)="onFirebase()">Firebase</button>
         <button block (click)="presentActionSheet()" ion-button style="color:white">{{ 'language' | translate }}</button>
         <a>{{ 'Forgotyourlogindetail' | translate }}<b>  {{ 'Gethelpsigningin' | translate }}</b></a>

@@ -1,14 +1,14 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-//const bodyParser = require('body-parser')
-//admin.initializeApp(functions.config().firebase);
 
-const serviceAccount=require('./client-space-mobile-a5d0d08bc126.json');
+
+const serviceAccount=require('./client-space-mobile-5ee7e5905d13.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://client-space-mobile.firebaseio.com"
-})
-
+});
+//const bodyParser = require('body-parser')
+//admin.initializeApp(functions.config().firebase);
 
 
 
@@ -55,22 +55,47 @@ exports.Registered = functions.https.onRequest(function (request, response) {
        const Ref = admin.database().ref('Registered');
        Ref.push({'token':request.body.token,'email':request.body.email,'UserUID':request.body.UserUID}).then((data) => {
            response.status(200).send(str1);
+
             });
+
+
    }
+
 });
+
 exports.CreateUserToken = functions.https.onRequest(function (request, response) {
-    var uids = "10";
 
-   // var str = '{ "status": customToken}';
+    var uids = "101";
+    var str = '{ "status": customToken}';
+
+
     var additionalClaims = {
-        premiumAccount: true,
-        sub:email,
-        password:password
+        premiumAccount: true
     };
-    response.send({
-        test: true
-    })
-});
 
+
+
+    admin.auth().createCustomToken(uids)
+        .then(function (token) {
+
+            response.status(200).send(JSON.stringify(token));
+        }).catch(function (error) {
+        response.status(200).send(JSON.stringify(error));
+    });
+
+
+    admin.auth().updateUser(uids, {
+        email: "modifiedUser@example.com"
+    })
+        .then(function(userRecord) {
+            // See the UserRecord reference doc for the contents of userRecord.
+            console.log("Successfully updated user", userRecord.toJSON());
+        })
+        .catch(function(error) {
+            console.log("Error updating user:", error);
+        });
+
+
+});
 
 
