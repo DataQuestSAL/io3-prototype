@@ -65,7 +65,7 @@ exports.Registered = functions.https.onRequest(function (request, response) {
 
 exports.CreateUserToken = functions.https.onRequest(function (request, response) {
 
-    var uids = "101";
+    var uid = "1";
     var str = '{ "status": customToken}';
 
 
@@ -73,27 +73,29 @@ exports.CreateUserToken = functions.https.onRequest(function (request, response)
         premiumAccount: true
     };
 
-
-
-    admin.auth().createCustomToken(uids)
+    admin.auth().createCustomToken(uid)
         .then(function (token) {
 
             response.status(200).send(JSON.stringify(token));
+            console.log(token);
         }).catch(function (error) {
         response.status(200).send(JSON.stringify(error));
     });
 
 
-    admin.auth().updateUser(uids, {
-        email: "modifiedUser@example.com"
+    admin.auth().updateUser(uid, {
+        email: "newuuser@dq.com.lb"
     })
         .then(function(userRecord) {
             // See the UserRecord reference doc for the contents of userRecord.
+            response.status(200).send(JSON.stringify(userRecord));
             console.log("Successfully updated user", userRecord.toJSON());
         })
         .catch(function(error) {
+            response.status(200).send(JSON.stringify(error));
             console.log("Error updating user:", error);
         });
+
 
 
 });
