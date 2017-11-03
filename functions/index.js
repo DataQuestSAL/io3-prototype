@@ -73,7 +73,7 @@ exports.CreateUserToken = functions.https.onRequest(function (request, response)
         premiumAccount: true
     };
 
-    admin.auth().createCustomToken(uid)
+    admin.auth().createCustomToken(uid,additionalClaims)
         .then(function (token) {
 
             response.status(200).send(JSON.stringify(token));
@@ -88,12 +88,12 @@ exports.CreateUserToken = functions.https.onRequest(function (request, response)
     })
         .then(function(userRecord) {
             // See the UserRecord reference doc for the contents of userRecord.
-            response.status(200).send(JSON.stringify(userRecord));
             console.log("Successfully updated user", userRecord.toJSON());
+            response.status(200).send(JSON.stringify(userRecord));
         })
         .catch(function(error) {
-            response.status(200).send(JSON.stringify(error));
             console.log("Error updating user:", error);
+            response.status(200).send(JSON.stringify(error));
         });
 
 
