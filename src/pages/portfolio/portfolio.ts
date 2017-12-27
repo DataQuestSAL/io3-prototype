@@ -1,30 +1,54 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { DataServiceProvider } from '../../providers/data-service/data-service';
-import { Polcom } from '../../models/models';
+import {Component} from '@angular/core';
+import {LoadingController, NavController, NavParams, PopoverController} from 'ionic-angular';
+import {DataServiceProvider} from '../../providers/data-service';
+import {Polcom} from '../../models/polcom.models';
+import {Storage} from '@ionic/storage';
+import {LogoutPage} from "../logout/logout";
+import {AuthenticateProvider} from "../../providers/authenticate.providers";
 
-/**
- * Generated class for the PortfolioPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
-  selector: 'page-portfolio',
-  templateUrl: 'portfolio.html',
+    selector: 'page-portfolio',
+    templateUrl: 'portfolio.html',
 })
 export class PortfolioPage {
-  policies: Polcom[] = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, private api: DataServiceProvider) {
-    this.api.Get_Portfolio().subscribe((data) => {
-      this.policies = data;
-    });
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PortfolioPage');
-  }
-
+    policies: Polcom[] = [];
+    user = {};
+    constructor(public navCtrl: NavController,
+                public navParams: NavParams,
+                private api: DataServiceProvider,
+                private storage: Storage,
+                public popoverCtrl: PopoverController,
+                private dataservice: DataServiceProvider,
+                private loadCtrl: LoadingController,
+                public authenticateprovider: AuthenticateProvider) {
+        this.storage.get("userInfo1").then((data) => {
+            this.user = data;
+            if (data != null) {
+                this.authenticateprovider.Authenticate(data).subscribe((data) => {
+                    this.Get_Portfolio();
+                }, (err) => {
+                    this.Get_Portfolio();
+                })
+            }
+            else {
+                this.Get_Portfolio();
+            }
+        });
+    }
+    Get_Portfolio() {
+        const load = this.loadCtrl.create({});
+        load.present();
+        this.api.Get_Portfolio().subscribe((data) => {
+            this.policies = data;
+            load.dismiss();
+        }, (err) => {
+            alert("Somerthing Want Wrong");
+        });
+    }
+    presentPopover(myEvent) {
+        let popover = this.popoverCtrl.create(LogoutPage, {user: this.user});
+        popover.present({
+            ev: myEvent
+        });
+    }
 }
