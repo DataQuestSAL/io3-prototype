@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Http, RequestOptions, Response, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {AngularFireAuth} from "angularfire2/auth";
@@ -10,8 +10,9 @@ import {Firebase} from "@ionic-native/firebase";
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import {Observable} from 'rxjs/Observable'
-import firebase from "firebase";
+import firebases from "firebase";
 import {Facebook} from "@ionic-native/facebook";
+import {FCM} from "@ionic-native/fcm";
 
 
 @Injectable()
@@ -23,7 +24,8 @@ export class FirebaseProvider {
     authListener;
     userId;
     api = "https://us-central1-client-space-mobile.cloudfunctions.net/";
-    type_of_os="";
+    type_of_os = "";
+
     constructor(public http: Http,
                 public firebaseAuth: AngularFireAuth,
                 public toast: Toast,
@@ -32,19 +34,28 @@ export class FirebaseProvider {
                 private storage: Storage,
                 public firebase: Firebase,
                 public fb: Facebook,
-                public platform:Platform) {
+                public platform: Platform,
+                public FCMPlugin: FCM) {
         //this is for the push Notifications only and only for ios without this the push wont work
         this.firebase.grantPermission().then((data) => {
             // alert(data);
         }).catch((err) => {
             alert("error-->" + JSON.stringify(err))
         });
-        //this is for the push Notifications only and only for ios without this the push wont work
-        this.firebase.hasPermission().then((data) => {
-            //alert(JSON.stringify(data));
-        }).catch((err) => {
-            //alert("error-->" + JSON.stringify(err))
+        this.firebase.onNotificationOpen().subscribe((data) => {
+            alert(JSON.stringify(data));
+        }, (err) => {
+            alert(JSON.stringify(err))
         });
+
+        // //this is for the push Notifications only and only for ios without this the push wont work
+        // this.firebase.hasPermission().then((data) => {
+        //     //alert(JSON.stringify(data));
+        // }).catch((err) => {
+        //     //alert("error-->" + JSON.stringify(err))
+        // });
+
+
         this.notregisteredlist = afDB.list('/notregistered');
         this.authListener = this.firebaseAuth.authState.subscribe(user => {
             if (user) {
@@ -60,6 +71,7 @@ export class FirebaseProvider {
         });
     }
 
+
     signup(email: string, password: string) {
 
         // this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password)
@@ -72,7 +84,7 @@ export class FirebaseProvider {
 
         // this.firebase.onTokenRefresh()
 
-
+// -----------------------------------------------------------------------
         return this.http.get(this.api + "sign_up")
             .do(this.logResponse)
             .map(this.extractData)
@@ -104,13 +116,13 @@ export class FirebaseProvider {
         this.afDB.list('/notregistered').push({
             tokenuser: token,
             type_of_os: typeOfOs,
-            registered:"Not registered"
+            registered: "Not registered"
         }).then((data) => {
             this.storage.set("gotUserToken", true);
             this.getUserUID(data);
             ///alert(data)
         });
-
+// -------------------------------------------------------------
 
         // let headers = new Headers({
         //     'content-type': 'application/x-www-form-urlencoded'
@@ -132,11 +144,11 @@ export class FirebaseProvider {
     userRegistered(user, email) {
         if (this.platform.is('ios')) {
 
-            this.type_of_os="ios"
+            this.type_of_os = "ios"
         }
         if (this.platform.is('android')) {
 
-            this.type_of_os="android"
+            this.type_of_os = "android"
         }
 
         this.storage.get('hasSignIn').then((val) => {
@@ -150,8 +162,8 @@ export class FirebaseProvider {
                                     userName: "danny",
                                     UserUID: user,
                                     Email: email,
-                                    type_of_os:this.type_of_os,
-                                    registered:"Registered"
+                                    type_of_os: this.type_of_os,
+                                    registered: "Registered"
 
                                 }).then((data) => {
                                     this.storage.set("gotUserToken", true);
@@ -167,6 +179,7 @@ export class FirebaseProvider {
         });
         this.storage.set('hasSignIn', true);
     }
+
     onFaceBookLogin() {
         // this.fb.login(['email']).then((data) => {
         //     const fc = firebase.auth.FacebookAuthProvider.credential(data.authResponse.accessToken);
@@ -178,17 +191,18 @@ export class FirebaseProvider {
         //     alert(JSON.stringify(err))
         // })
 
+        let provider = new firebases.auth.FacebookAuthProvider();
+        firebases.auth().signInWithRedirect(provider).then(() => {
+            firebases.auth().getRedirectResult().then((data) => {
+                alert(JSON.stringify(data))
+            }).catch((err) => {
+                alert("bad");
+            })
+        })
 
-        // let provider = new firebase.auth.FacebookAuthProvider();
-        // // let provider=new firebase.auth.FacebookAuthProvider;
-        // this.firebaseAuth.auth.signInWithRedirect(provider).then((data) => {
-        //     this.firebaseAuth.auth.getRedirectResult().then((res) => {
-        //         alert("-->" + JSON.stringify(res))
-        //     })
-        // }).catch((err) => {
-        //     alert(JSON.stringify(err))
-        // })
+
     }
+
     private catchError(error: Response | any) {
         console.log(error);
         return Observable.throw(error.jason().error() || "Server Error");

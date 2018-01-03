@@ -17,6 +17,7 @@ import {ForgetpasswordPage} from "../forgetpassword/forgetpassword";
 import * as _ from 'lodash';
 import {Params_Authenticate} from "../../models/login.models";
 import {Facebook} from "@ionic-native/facebook";
+import {BackgroundMode} from "@ionic-native/background-mode";
 
 @Component({
     selector: 'page-home',
@@ -43,9 +44,10 @@ export class HomePage extends basePage {
                 public firebase: Firebase,
                 public alertCtrl: AlertController,
                 public authenticateprovider: AuthenticateProvider,
-                private fb: Facebook) {
+                private fb: Facebook,
+                private backgroundMode: BackgroundMode) {
         super();
-
+        this.backgroundMode.enable();
         if (this.platform.is('ios')) {
 
             this.type_of_os="ios"
@@ -165,11 +167,8 @@ export class HomePage extends basePage {
     }
 
     onFacebook() {
-
         this.firebaseprovider.onFaceBookLogin();
-
     }
-
     onFirebase() {
         this.navCtrl.push(FirebaseanalyticsPage)
     }

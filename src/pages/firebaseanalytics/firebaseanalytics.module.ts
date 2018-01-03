@@ -4,7 +4,7 @@ import { FirebaseanalyticsPage } from './firebaseanalytics';
 
 @NgModule({
   declarations: [
-    FirebaseanalyticsPage,
+    //FirebaseanalyticsPage,
   ],
   imports: [
     IonicPageModule.forChild(FirebaseanalyticsPage),

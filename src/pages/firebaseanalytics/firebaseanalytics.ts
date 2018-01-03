@@ -18,20 +18,20 @@ export class FirebaseanalyticsPage {
                 public firebaseprovider: FirebaseProvider) {
 
 
-        this.firebase.grantPermission().then((data) => {
-            this.firebaseprovider.onToast("<---" + data);
-        }).catch((err) => {
-            this.firebaseprovider.onToast("--->" + err);
-        });
-
-
-        this.firebase.logEvent("page_view", {page: "dashboard"}).then(
-            (data) => {
-                this.maindata = JSON.stringify(data);
-            }
-        ).catch(function (err) {
-            this.errordata = err;
-        });
+        // this.firebase.grantPermission().then((data) => {
+        //     this.firebaseprovider.onToast("<---" + data);
+        // }).catch((err) => {
+        //     this.firebaseprovider.onToast("--->" + err);
+        // });
+        //
+        //
+        // this.firebase.logEvent("page_view", {page: "dashboard"}).then(
+        //     (data) => {
+        //         this.maindata = JSON.stringify(data);
+        //     }
+        // ).catch(function (err) {
+        //     this.errordata = err;
+        // });
 
     }
 }
