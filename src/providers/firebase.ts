@@ -35,7 +35,7 @@ export class FirebaseProvider {
                 public fb: Facebook,
                 public platform: Platform,
                 public FCMPlugin: FCM,
-                public http2:HttpClient) {
+                public http:HttpClient) {
         //this is for the push Notifications only and only for ios without this the push wont work
         this.firebase.grantPermission().then((data) => {
             // alert(data);
@@ -83,7 +83,7 @@ export class FirebaseProvider {
         //     });
         // this.firebase.onTokenRefresh()
 // -----------------------------------------------------------------------
-        return this.http2.get(this.api + "sign_up")
+        return this.http.get(this.api + "sign_up")
     }
 
     login(newEmail: string, newPassword: string) {
@@ -143,6 +143,7 @@ export class FirebaseProvider {
 
             this.type_of_os = "android"
         }
+
         this.storage.get('hasSignIn').then((val) => {
             if (val != true) {
                 this.storage.get('UserUID').then((key) => {
@@ -171,6 +172,7 @@ export class FirebaseProvider {
         });
         this.storage.set('hasSignIn', true);
     }
+
     onFaceBookLogin() {
         // this.fb.login(['email']).then((data) => {
         //     const fc = firebase.auth.FacebookAuthProvider.credential(data.authResponse.accessToken);
