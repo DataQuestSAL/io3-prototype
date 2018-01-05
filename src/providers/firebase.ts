@@ -24,7 +24,6 @@ export class FirebaseProvider {
     userId;
     api = "https://us-central1-client-space-mobile.cloudfunctions.net/";
     type_of_os = "";
-
     constructor(
                 public firebaseAuth: AngularFireAuth,
                 public toast: Toast,
@@ -47,15 +46,12 @@ export class FirebaseProvider {
         }, (err) => {
             alert(JSON.stringify(err))
         });
-
         // //this is for the push Notifications only and only for ios without this the push wont work
         // this.firebase.hasPermission().then((data) => {
         //     //alert(JSON.stringify(data));
         // }).catch((err) => {
         //     //alert("error-->" + JSON.stringify(err))
         // });
-
-
         this.notregisteredlist = afDB.list('/notregistered');
         this.authListener = this.firebaseAuth.authState.subscribe(user => {
             if (user) {
@@ -70,10 +66,7 @@ export class FirebaseProvider {
             // alert(err);
         });
     }
-
-
     signup(email: string, password: string) {
-
         // this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password)
         //     .then(value => {
         //         this.onToast('Success!,' + value);
@@ -85,7 +78,6 @@ export class FirebaseProvider {
 // -----------------------------------------------------------------------
         return this.http.get(this.api + "sign_up")
     }
-
     login(newEmail: string, newPassword: string) {
         // return this.firebaseAuth.auth.signInWithEmailAndPassword(newEmail, newPassword).then((user) => {
         //     this.onToast(user);
@@ -104,7 +96,6 @@ export class FirebaseProvider {
         //     this.onToast(err.message);
         // });
     }
-
     notRegistered(token, typeOfOs) {
         this.afDB.list('/notregistered').push({
             tokenuser: token,
@@ -116,7 +107,6 @@ export class FirebaseProvider {
             ///alert(data)
         });
 // -------------------------------------------------------------
-
         // let headers = new Headers({
         //     'content-type': 'application/x-www-form-urlencoded'
         // });
@@ -133,17 +123,13 @@ export class FirebaseProvider {
         //         alert("da");
         //     });
     }
-
     userRegistered(user, email) {
         if (this.platform.is('ios')) {
-
             this.type_of_os = "ios"
         }
         if (this.platform.is('android')) {
-
             this.type_of_os = "android"
         }
-
         this.storage.get('hasSignIn').then((val) => {
             if (val != true) {
                 this.storage.get('UserUID').then((key) => {
