@@ -66,8 +66,8 @@ export class HomePage extends basePage {
         // this.data.USER_NAME = 'adib';
         //  this.data.PASSWORD = '454540@EVDQJJX';
         this.data.USER_NAME = 'amine';
-        this.data.PASSWORD = '243216@UCSJSEK';
-        this.api.DQNewSession().subscribe((data) => {
+        this.data.PASSWORD = '243216@QZHRHAE';
+        this.api.DQNewSession().subscribe((data:any) => {
             this.common.SESSION_ID = data;
         });
         storage.get('language').then((val) => {
@@ -95,7 +95,7 @@ export class HomePage extends basePage {
     Authenticate() {
         // this.user = this.firebaseprovider.login(this.data.USER_NAME, this.data.PASSWORD);
         this.Processing = true;
-        this.authenticateprovider.Authenticate(this.data).subscribe((result) => {
+        this.authenticateprovider.Authenticate(this.data).subscribe((result:any) => {
             this.Processing = false;
             if (result.Is_Authentic) {
                 if (this.remember === true) {

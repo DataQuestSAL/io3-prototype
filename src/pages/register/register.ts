@@ -91,7 +91,7 @@ export class RegisterPage extends basePage {
 
     GetSignup() {
         let param = new Params_GetSignup();
-        this.api.GetSignup(param).subscribe((data) => {
+        this.api.GetSignup(param).subscribe((data:any) => {
             this.products = data.filter(x => x.Tbl_Name == '_WebProducts');
         });
     }
@@ -114,8 +114,8 @@ export class RegisterPage extends basePage {
     }
 
     onRegister() {
-        this.dataservices.registerInfo(this.registerInfo).subscribe((data) => {
-            if (data.res == "validate") {
+        this.dataservices.registerInfo(this.registerInfo).subscribe((data:any) => {
+            if (data.res== "validate") {
 
                 this.toast.show(`There Was A Policy Found`, '5000', 'center').subscribe(
                     toast => {

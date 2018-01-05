@@ -1,5 +1,4 @@
-import {Injectable, OnInit} from '@angular/core';
-import {Http, RequestOptions, Response, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import {AngularFireAuth} from "angularfire2/auth";
 import {Toast} from "@ionic-native/toast";
@@ -9,10 +8,10 @@ import {Storage} from '@ionic/storage';
 import {Firebase} from "@ionic-native/firebase";
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
-import {Observable} from 'rxjs/Observable'
 import firebases from "firebase";
 import {Facebook} from "@ionic-native/facebook";
 import {FCM} from "@ionic-native/fcm";
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable()
@@ -26,7 +25,7 @@ export class FirebaseProvider {
     api = "https://us-central1-client-space-mobile.cloudfunctions.net/";
     type_of_os = "";
 
-    constructor(public http: Http,
+    constructor(
                 public firebaseAuth: AngularFireAuth,
                 public toast: Toast,
                 public afDB: AngularFireDatabase,
@@ -35,7 +34,8 @@ export class FirebaseProvider {
                 public firebase: Firebase,
                 public fb: Facebook,
                 public platform: Platform,
-                public FCMPlugin: FCM) {
+                public FCMPlugin: FCM,
+                public http2:HttpClient) {
         //this is for the push Notifications only and only for ios without this the push wont work
         this.firebase.grantPermission().then((data) => {
             // alert(data);
@@ -81,16 +81,9 @@ export class FirebaseProvider {
         //     .catch(err => {
         //         this.onToast('Something went wrong:,' + err.message);
         //     });
-
         // this.firebase.onTokenRefresh()
-
 // -----------------------------------------------------------------------
-        return this.http.get(this.api + "sign_up")
-            .do(this.logResponse)
-            .map(this.extractData)
-            .catch(this.catchError);
-
-
+        return this.http2.get(this.api + "sign_up")
     }
 
     login(newEmail: string, newPassword: string) {
@@ -150,7 +143,6 @@ export class FirebaseProvider {
 
             this.type_of_os = "android"
         }
-
         this.storage.get('hasSignIn').then((val) => {
             if (val != true) {
                 this.storage.get('UserUID').then((key) => {
@@ -179,7 +171,6 @@ export class FirebaseProvider {
         });
         this.storage.set('hasSignIn', true);
     }
-
     onFaceBookLogin() {
         // this.fb.login(['email']).then((data) => {
         //     const fc = firebase.auth.FacebookAuthProvider.credential(data.authResponse.accessToken);
@@ -190,7 +181,6 @@ export class FirebaseProvider {
         // }).catch((err) => {
         //     alert(JSON.stringify(err))
         // })
-
         let provider = new firebases.auth.FacebookAuthProvider();
         firebases.auth().signInWithRedirect(provider).then(() => {
             firebases.auth().getRedirectResult().then((data) => {
@@ -199,23 +189,7 @@ export class FirebaseProvider {
                 alert("bad");
             })
         })
-
-
     }
-
-    private catchError(error: Response | any) {
-        console.log(error);
-        return Observable.throw(error.jason().error() || "Server Error");
-    }
-
-    private logResponse(res: Response) {
-        console.log(res);
-    }
-
-    private extractData(res: Response) {
-        return res.json();
-    }
-
     logoutUser() {
         return this.firebaseAuth.auth.signOut();
     }

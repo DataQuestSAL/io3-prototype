@@ -111,10 +111,10 @@
         <variable name="APP_ID" value="1941401862786980" />
         <variable name="APP_NAME" value="Client­space" />
     </plugin>
-    <plugin name="cordova-plugin-firebase" spec="git+https://github.com/arnesson/cordova-plugin-firebase.git" />
     <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
     <plugin name="cordova-plugin-buildinfo" spec="^2.0.1" />
     <plugin name="cordova-universal-links-plugin" spec="^1.2.1" />
     <plugin name="cordova-plugin-browsertab" spec="^0.2.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.2" />
+    <plugin name="cordova-plugin-firebase" spec="^0.1.25" />
 </widget>

@@ -10,7 +10,7 @@ import {HomePage} from '../pages/login/login';
 import {DataServiceProvider} from '../providers/data-service';
 import {CommonServiceProvider} from '../providers/common-service';
 import {FormsModule} from '@angular/forms';
-import {HttpModule, Http} from '@angular/http';
+import {Http, HttpModule} from '@angular/http';
 import {RegisterPage} from '../pages/register/register';
 import {PortfolioPage} from '../pages/portfolio/portfolio';
 import {Toast} from '@ionic-native/toast';
@@ -36,10 +36,15 @@ import {environment} from "../environments/environment";
 import {Facebook} from "@ionic-native/facebook";
 import {FCM} from "@ionic-native/fcm";
 import {BackgroundMode} from "@ionic-native/background-mode";
+import {HttpClientModule} from "@angular/common/http";
 
 export function createTranslateLoader(http: Http) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
+// export function createTranslateLoader(http: Http) {
+//     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+// }
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDPPNUCQHs602A0x26OtKXg0k-ofQok_3E",
@@ -66,6 +71,7 @@ export const firebaseConfig = {
         BrowserModule,
         FormsModule,
         HttpModule,
+        HttpClientModule,
         IonicStorageModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
