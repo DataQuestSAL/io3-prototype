@@ -18,6 +18,7 @@ import * as _ from 'lodash';
 import {Params_Authenticate} from "../../models/login.models";
 import {Facebook} from "@ionic-native/facebook";
 import {BackgroundMode} from "@ionic-native/background-mode";
+import {OneSignal} from "@ionic-native/onesignal";
 
 @Component({
     selector: 'page-home',
@@ -29,7 +30,7 @@ export class HomePage extends basePage {
     user;
     userToken;
     remember: boolean = false;
-    type_of_os="";
+    type_of_os = "";
 
     constructor(public navCtrl: NavController,
                 private toast: Toast,
@@ -45,16 +46,21 @@ export class HomePage extends basePage {
                 public alertCtrl: AlertController,
                 public authenticateprovider: AuthenticateProvider,
                 private fb: Facebook,
-                private backgroundMode: BackgroundMode) {
+                private backgroundMode: BackgroundMode,
+                private oneSignal: OneSignal) {
         super();
+
+       // this.oneSignal.deleteTags(["name", "lastname"])
+       this.oneSignal.sendTags({"name": "12", "lastname": "nader"});
+
         this.backgroundMode.enable();
         if (this.platform.is('ios')) {
 
-            this.type_of_os="ios"
+            this.type_of_os = "ios"
         }
         if (this.platform.is('android')) {
 
-            this.type_of_os="android"
+            this.type_of_os = "android"
         }
 
         this.storage.get("userInfo1").then((data) => {
@@ -67,7 +73,7 @@ export class HomePage extends basePage {
         //  this.data.PASSWORD = '454540@EVDQJJX';
         this.data.USER_NAME = 'amine';
         this.data.PASSWORD = '243216@QZHRHAE';
-        this.api.DQNewSession().subscribe((data:any) => {
+        this.api.DQNewSession().subscribe((data: any) => {
             this.common.SESSION_ID = data;
         });
         storage.get('language').then((val) => {
@@ -79,7 +85,7 @@ export class HomePage extends basePage {
             this.firebase.getToken()
                 .then((tokenuser) => {
                     if (this.userToken != true) {
-                        this.firebaseprovider.notRegistered(tokenuser,this.type_of_os);
+                        this.firebaseprovider.notRegistered(tokenuser, this.type_of_os);
                     }
                 }).catch((error) => {
                 this.firebaseprovider.onToast(error);
@@ -95,7 +101,7 @@ export class HomePage extends basePage {
     Authenticate() {
         // this.user = this.firebaseprovider.login(this.data.USER_NAME, this.data.PASSWORD);
         this.Processing = true;
-        this.authenticateprovider.Authenticate(this.data).subscribe((result:any) => {
+        this.authenticateprovider.Authenticate(this.data).subscribe((result: any) => {
             this.Processing = false;
             if (result.Is_Authentic) {
                 if (this.remember === true) {
@@ -169,6 +175,7 @@ export class HomePage extends basePage {
     onFacebook() {
         this.firebaseprovider.onFaceBookLogin();
     }
+
     onFirebase() {
         this.navCtrl.push(FirebaseanalyticsPage)
     }

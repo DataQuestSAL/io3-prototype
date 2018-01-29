@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Tags</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label fixed>name</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Last Name</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="lastname"></ion-input>
+    </ion-item>
+
+    <button ion-button block (click)="onInsertTags()">Insert Tags</button>
+    <button ion-button block color="danger">Delete Tags</button>
+
+
+  </ion-list>
+
+
+
+
+  
+
+</ion-content>

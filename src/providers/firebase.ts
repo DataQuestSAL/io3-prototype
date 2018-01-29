@@ -36,15 +36,21 @@ export class FirebaseProvider {
                 public FCMPlugin: FCM,
                 public http:HttpClient) {
         //this is for the push Notifications only and only for ios without this the push wont work
-        this.firebase.grantPermission().then((data) => {
-            // alert(data);
-        }).catch((err) => {
-            alert("error-->" + JSON.stringify(err))
-        });
+
+
+        // this.firebase.grantPermission().then((data) => {
+        //     // alert(data);
+        // }).catch((err) => {
+        //     alert("error-->" + JSON.stringify(err))
+        // });
+
+
+
+
         this.firebase.onNotificationOpen().subscribe((data) => {
-            alert(JSON.stringify(data));
+
         }, (err) => {
-            alert(JSON.stringify(err))
+
         });
         // //this is for the push Notifications only and only for ios without this the push wont work
         // this.firebase.hasPermission().then((data) => {

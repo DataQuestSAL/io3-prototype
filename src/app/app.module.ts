@@ -37,6 +37,8 @@ import {Facebook} from "@ionic-native/facebook";
 import {FCM} from "@ionic-native/fcm";
 import {BackgroundMode} from "@ionic-native/background-mode";
 import {HttpClientModule} from "@angular/common/http";
+import {OneSignal} from "@ionic-native/onesignal";
+import {TagsPage} from "../pages/tags/tags";
 
 export function createTranslateLoader(http: Http) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -65,7 +67,8 @@ export const firebaseConfig = {
         FirebaseanalyticsPage,
         LogoutPage,
         RegisterwithpolicyPage,
-        ForgetpasswordPage
+        ForgetpasswordPage,
+        TagsPage
     ],
     imports: [
         BrowserModule,
@@ -100,7 +103,8 @@ export const firebaseConfig = {
         FirebaseanalyticsPage,
         LogoutPage,
         RegisterwithpolicyPage,
-        ForgetpasswordPage
+        ForgetpasswordPage,
+        TagsPage
     ],
     providers: [
         StatusBar,
@@ -121,7 +125,8 @@ export const firebaseConfig = {
         ForgetpasswordProvider,
         Facebook,
         FCM,
-        BackgroundMode
+        BackgroundMode,
+        OneSignal
     ]
 })
 export class AppModule {

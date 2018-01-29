@@ -1,7 +1,5 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-
-
 const serviceAccount = require('./client-space-mobile-5ee7e5905d13.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -84,45 +82,48 @@ exports.CreateUserToken = functions.https.onRequest(function (request, response)
 });
 
 
-exports.Sendpushnotification = functions.https.onRequest(function (request, response) {
-    if (request.method == "POST") {
-        var registrationTokens = request.body.tokens;
+exports.Sendpushnotification = functions.https.onRequest(function (req, res) {
+    var registrationTokens = req.body.tokens;
+    if (req.method == "POST") {
+        console.log("Sendpushnotification");
+        var sendNotification = function(data) {
+            var headers = {
+                "Content-Type": "application/json; charset=utf-8",
+                "Authorization": "Basic ZmQzMTkzODktY2RhMy00NzgyLTg0MDMtZjgyNTczNTJiNzFk"
+            };
+            var options = {
+                host: "https://onesignal.com",
+                port: 443,
+                path: "/api/v1/notifications",
+                method: "POST",
+                headers: headers
+            };
+            var https = require('https');
+            var req = https.request(options, function(res) {
+                res.on('data', function(data) {
+                    console.log("Response:");
+                    console.log(JSON.parse(data));
+                });
+            });
+            req.on('error', function(e) {
+                console.log("ERROR:");
+                console.log(e);
+            });
+            res.send("sss");
+            req.write(JSON.stringify(data));
+            req.end();
 
-
-        // var registrationTokens = [
-        //     "cztUhKOF6xk:APA91bEz8J07CHVfECKcvd3RBl29XrTo66Pt7XEXpzdmXi4chsJOc8OQ0DgOou3WQYy_ZuAmnqbHF4iQVWPTUSWB4gOx0uCdfjkxsZ017HMkytYGds9DlQVf_3elmjioljxxQhToFySd",//iso
-        //     "ca3AdMENGYE:APA91bEAyLHUgwMaivyYH10kng876O4aEisgwrIxrUMlux9RuEWCVHSBSSMAEDtDz4T3bfIK8qWLZ2YpVl5C_pVei28iqZqJxmOzPM6KnPd4snnjHUljmEE-WNjExCRkjmJptvddOfbj"//iso
-        // ];
-
-
-        console.log(registrationTokens);
-       // response.send("ok");
-        var payload = {
-            data: {
-                title: request.body.text,
-            }
         };
 
-
-        // const options = {
-        //     content_available: true
-        // }
-
-
-
-        admin.messaging().sendToDevice(registrationTokens, payload)
-            .then(function (response) {
-                console.log("Successfully sent message:", response);
-            })
-            .catch(function (error) {
-                console.log("Error sending message:", error);
-            });
-
-
+        var message = {
+            app_id: "9977658b-4e06-4a64-b0f9-c3fadc9eaa72",
+            contents: {"en": "English Message"},
+            included_segments: ["All"]
+        };
+        sendNotification(message);
 
     }
     else {
-
-
+        res.send("ddd");
     }
 });
