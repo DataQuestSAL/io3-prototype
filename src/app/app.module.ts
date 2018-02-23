@@ -23,7 +23,6 @@ import {FirebaseanalyticsPage} from "../pages/firebaseanalytics/firebaseanalytic
 import {Firebase} from "@ionic-native/firebase";
 import {FirebaseProvider} from '../providers/firebase';
 import {AngularFireModule} from 'angularfire2';
-import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {LogoutPage} from "../pages/logout/logout";
 import {APP_CONFIG, danny, rony} from "../config/configs";
@@ -39,6 +38,8 @@ import {BackgroundMode} from "@ionic-native/background-mode";
 import {HttpClientModule} from "@angular/common/http";
 import {OneSignal} from "@ionic-native/onesignal";
 import {TagsPage} from "../pages/tags/tags";
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+
 
 export function createTranslateLoader(http: Http) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -89,9 +90,8 @@ export const firebaseConfig = {
             autoFocusAssist: false
         }),
         AngularFireModule.initializeApp(firebaseConfig),
-        AngularFireDatabaseModule,
         AngularFireAuthModule,
-
+        AngularFirestoreModule.enablePersistence(),
     ],
     bootstrap: [IonicApp],
     entryComponents: [

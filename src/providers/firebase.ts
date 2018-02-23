@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import {AngularFireAuth} from "angularfire2/auth";
 import {Toast} from "@ionic-native/toast";
-import {AngularFireDatabase} from "angularfire2/database";
 import {Events, Platform} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import {Firebase} from "@ionic-native/firebase";
@@ -12,6 +11,7 @@ import firebases from "firebase";
 import {Facebook} from "@ionic-native/facebook";
 import {FCM} from "@ionic-native/fcm";
 import {HttpClient} from "@angular/common/http";
+import {AngularFirestore} from "angularfire2/firestore";
 
 
 @Injectable()
@@ -24,41 +24,24 @@ export class FirebaseProvider {
     userId;
     api = "https://us-central1-client-space-mobile.cloudfunctions.net/";
     type_of_os = "";
-    constructor(
-                public firebaseAuth: AngularFireAuth,
+
+    constructor(public firebaseAuth: AngularFireAuth,
                 public toast: Toast,
-                public afDB: AngularFireDatabase,
                 public events: Events,
                 private storage: Storage,
                 public firebase: Firebase,
                 public fb: Facebook,
                 public platform: Platform,
                 public FCMPlugin: FCM,
-                public http:HttpClient) {
+                public http: HttpClient,
+                private db: AngularFirestore) {
         //this is for the push Notifications only and only for ios without this the push wont work
-
-
-        // this.firebase.grantPermission().then((data) => {
-        //     // alert(data);
-        // }).catch((err) => {
-        //     alert("error-->" + JSON.stringify(err))
-        // });
-
-
-
-
         this.firebase.onNotificationOpen().subscribe((data) => {
 
         }, (err) => {
 
         });
-        // //this is for the push Notifications only and only for ios without this the push wont work
-        // this.firebase.hasPermission().then((data) => {
-        //     //alert(JSON.stringify(data));
-        // }).catch((err) => {
-        //     //alert("error-->" + JSON.stringify(err))
-        // });
-        this.notregisteredlist = afDB.list('/notregistered');
+
         this.authListener = this.firebaseAuth.authState.subscribe(user => {
             if (user) {
                 this.authListener.unsubscribe();
@@ -72,6 +55,7 @@ export class FirebaseProvider {
             // alert(err);
         });
     }
+
     signup(email: string, password: string) {
         // this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password)
         //     .then(value => {
@@ -84,6 +68,7 @@ export class FirebaseProvider {
 // -----------------------------------------------------------------------
         return this.http.get(this.api + "sign_up")
     }
+
     login(newEmail: string, newPassword: string) {
         // return this.firebaseAuth.auth.signInWithEmailAndPassword(newEmail, newPassword).then((user) => {
         //     this.onToast(user);
@@ -102,32 +87,18 @@ export class FirebaseProvider {
         //     this.onToast(err.message);
         // });
     }
+
     notRegistered(token, typeOfOs) {
-        this.afDB.list('/notregistered').push({
+        //firestroe ---> database
+        this.db.collection('notregistered').add({
             tokenuser: token,
             type_of_os: typeOfOs,
             registered: "Not registered"
         }).then((data) => {
             this.storage.set("gotUserToken", true);
-            this.getUserUID(data);
-            ///alert(data)
+            this.getUserUID(data.id);
         });
-// -------------------------------------------------------------
-        // let headers = new Headers({
-        //     'content-type': 'application/x-www-form-urlencoded'
-        // });
-        // let options = new RequestOptions({
-        //     headers: headers
-        // });
-        // let data = {
-        //     token: token
-        // };
-        // return this.http.post(this.api + "notRegistered", JSON.stringify(data), options)
-        //     .do(this.logResponse)
-        //     .map(this.extractData)
-        //     .subscribe(() => {
-        //         alert("da");
-        //     });
+
     }
     userRegistered(user, email) {
         if (this.platform.is('ios')) {
@@ -139,42 +110,28 @@ export class FirebaseProvider {
         this.storage.get('hasSignIn').then((val) => {
             if (val != true) {
                 this.storage.get('UserUID').then((key) => {
-                    this.notregisteredlist.remove(key).then(() => {
-                        this.firebase.getToken()
-                            .then((tokenuser) => {
-                                this.afDB.list('/registered').push({
+                    alert(JSON.stringify(key));
+                    this.firebase.getToken()
+                        .then((tokenuser) => {
+                            this.db.collection("notregistered").doc(key).delete().then((data) => {
+                                this.db.collection("registered").add({
                                     tokenuser: tokenuser,
                                     userName: "danny",
                                     UserUID: user,
                                     Email: email,
                                     type_of_os: this.type_of_os,
                                     registered: "Registered"
+                                })
 
-                                }).then((data) => {
-                                    this.storage.set("gotUserToken", true);
-                                    this.getUserUID(data);
-                                });
-                            }).catch((error) => {
-                            this.onToast(error);
+                            })
                         });
-                    })
                 });
-
             }
         });
         this.storage.set('hasSignIn', true);
     }
 
     onFaceBookLogin() {
-        // this.fb.login(['email']).then((data) => {
-        //     const fc = firebase.auth.FacebookAuthProvider.credential(data.authResponse.accessToken);
-        //     alert(JSON.stringify(fc));
-        //     firebase.auth().signInWithCredential(fc).then((datas) => {
-        //
-        //     })
-        // }).catch((err) => {
-        //     alert(JSON.stringify(err))
-        // })
         let provider = new firebases.auth.FacebookAuthProvider();
         firebases.auth().signInWithRedirect(provider).then(() => {
             firebases.auth().getRedirectResult().then((data) => {
@@ -184,12 +141,13 @@ export class FirebaseProvider {
             })
         })
     }
+
     logoutUser() {
         return this.firebaseAuth.auth.signOut();
     }
 
     getUserUID(data) {
-        this.userId = data.key;
+        this.userId = data;
         this.storage.set("UserUID", this.userId);
     }
 

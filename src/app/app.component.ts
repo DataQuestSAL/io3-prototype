@@ -12,8 +12,8 @@ import {TagsPage} from "../pages/tags/tags";
   templateUrl: 'app.html'
 })
 export class MyApp {
- // rootPage:any = LandingPage;
-  rootPage:any = TagsPage;
+ rootPage:any = LandingPage;
+ // rootPage:any = TagsPage;
 
   constructor(platform: Platform,
               statusBar: StatusBar,

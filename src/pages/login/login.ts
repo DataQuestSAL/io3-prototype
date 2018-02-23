@@ -50,19 +50,15 @@ export class HomePage extends basePage {
                 private oneSignal: OneSignal) {
         super();
 
-       // this.oneSignal.deleteTags(["name", "lastname"])
-       this.oneSignal.sendTags({"name": "12", "lastname": "nader"});
-
+        // this.oneSignal.deleteTags(["name", "lastname"])
+        this.oneSignal.sendTags({"name": "12", "lastname": "nader"});
         this.backgroundMode.enable();
         if (this.platform.is('ios')) {
-
             this.type_of_os = "ios"
         }
         if (this.platform.is('android')) {
-
             this.type_of_os = "android"
         }
-
         this.storage.get("userInfo1").then((data) => {
             if (data.USER_NAME != "" || !_.isEmpty(data)) {
                 this.navCtrl.setRoot(PortfolioPage);
@@ -72,7 +68,7 @@ export class HomePage extends basePage {
         // this.data.USER_NAME = 'adib';
         //  this.data.PASSWORD = '454540@EVDQJJX';
         this.data.USER_NAME = 'amine';
-        this.data.PASSWORD = '243216@QZHRHAE';
+        this.data.PASSWORD = '243216@OPNLISI';
         this.api.DQNewSession().subscribe((data: any) => {
             this.common.SESSION_ID = data;
         });
@@ -92,12 +88,9 @@ export class HomePage extends basePage {
             });
         });
     }
-
     onForgetPassword() {
-        this.navCtrl.push(ForgetpasswordPage
-        )
+        this.navCtrl.push(ForgetpasswordPage)
     }
-
     Authenticate() {
         // this.user = this.firebaseprovider.login(this.data.USER_NAME, this.data.PASSWORD);
         this.Processing = true;
@@ -120,7 +113,6 @@ export class HomePage extends basePage {
             }
         });
     }
-
     ProceedToRegister() {
         const alert = this.alertCtrl.create({
             message: 'Do You Have Policy?',
@@ -141,7 +133,6 @@ export class HomePage extends basePage {
         });
         alert.present();
     }
-
     presentActionSheet() {
         this.storage.get("UserUID").then((val) => {
             console.log(val)

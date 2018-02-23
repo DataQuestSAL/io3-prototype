@@ -40,7 +40,7 @@
     "@ngx-translate/core": "^8.0.0",
     "@ngx-translate/http-loader": "^0.1.0",
     "angular": "^1.6.8",
-    "angularfire2": "^5.0.0-rc.4",
+    "angularfire2": "5.0.0-rc.4",
     "bootstrap": "^3.3.7",
     "cordova-android": "6.3.0",
     "cordova-plugin-appcenter-analytics": "^0.1.3",
