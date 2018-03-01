@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Validation Code</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-item>
+    <ion-label stacked>Code</ion-label>
+    <ion-input type="text" [(ngModel)]="code"></ion-input>
+  </ion-item>
+  <button ion-button full id="sign-in-button" (click)="onCode(code)">
+     Validate Number
+  </button>
+
+
+  <div *ngIf="tryCount==3">
+  <button ion-button clear full>Resend Code</button>
+  </div>
+
+</ion-content>

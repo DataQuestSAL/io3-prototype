@@ -19,6 +19,9 @@ import {Params_Authenticate} from "../../models/login.models";
 import {Facebook} from "@ionic-native/facebook";
 import {BackgroundMode} from "@ionic-native/background-mode";
 import {OneSignal} from "@ionic-native/onesignal";
+import firebase from 'firebase';
+import {PhonenumberPage} from "../phonenumber/phonenumber";
+
 
 @Component({
     selector: 'page-home',
@@ -31,6 +34,8 @@ export class HomePage extends basePage {
     userToken;
     remember: boolean = false;
     type_of_os = "";
+
+
 
     constructor(public navCtrl: NavController,
                 private toast: Toast,
@@ -88,9 +93,11 @@ export class HomePage extends basePage {
             });
         });
     }
+
     onForgetPassword() {
         this.navCtrl.push(ForgetpasswordPage)
     }
+
     Authenticate() {
         // this.user = this.firebaseprovider.login(this.data.USER_NAME, this.data.PASSWORD);
         this.Processing = true;
@@ -113,6 +120,7 @@ export class HomePage extends basePage {
             }
         });
     }
+
     ProceedToRegister() {
         const alert = this.alertCtrl.create({
             message: 'Do You Have Policy?',
@@ -133,6 +141,7 @@ export class HomePage extends basePage {
         });
         alert.present();
     }
+
     presentActionSheet() {
         this.storage.get("UserUID").then((val) => {
             console.log(val)
@@ -169,5 +178,11 @@ export class HomePage extends basePage {
 
     onFirebase() {
         this.navCtrl.push(FirebaseanalyticsPage)
+    }
+
+
+
+    onSignInWithPhoneNumber() {
+       this.navCtrl.push(PhonenumberPage)
     }
 }

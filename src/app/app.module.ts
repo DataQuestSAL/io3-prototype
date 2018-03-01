@@ -39,6 +39,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {OneSignal} from "@ionic-native/onesignal";
 import {TagsPage} from "../pages/tags/tags";
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import {PhonenumberPage} from "../pages/phonenumber/phonenumber";
+import {ValidationcodePage} from "../pages/validationcode/validationcode";
 
 
 export function createTranslateLoader(http: Http) {
@@ -69,7 +71,9 @@ export const firebaseConfig = {
         LogoutPage,
         RegisterwithpolicyPage,
         ForgetpasswordPage,
-        TagsPage
+        TagsPage,
+        PhonenumberPage,
+        ValidationcodePage
     ],
     imports: [
         BrowserModule,
@@ -104,7 +108,9 @@ export const firebaseConfig = {
         LogoutPage,
         RegisterwithpolicyPage,
         ForgetpasswordPage,
-        TagsPage
+        TagsPage,
+        PhonenumberPage,
+        ValidationcodePage
     ],
     providers: [
         StatusBar,
@@ -126,7 +132,8 @@ export const firebaseConfig = {
         Facebook,
         FCM,
         BackgroundMode,
-        OneSignal
+        OneSignal,
+        Firebase
     ]
 })
 export class AppModule {

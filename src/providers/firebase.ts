@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import {AngularFireAuth} from "angularfire2/auth";
 import {Toast} from "@ionic-native/toast";
@@ -10,8 +10,9 @@ import 'rxjs/add/operator/catch';
 import firebases from "firebase";
 import {Facebook} from "@ionic-native/facebook";
 import {FCM} from "@ionic-native/fcm";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AngularFirestore} from "angularfire2/firestore";
+import {APP_CONFIG, AppConfig} from "../config/configs";
 
 
 @Injectable()
@@ -24,6 +25,7 @@ export class FirebaseProvider {
     userId;
     api = "https://us-central1-client-space-mobile.cloudfunctions.net/";
     type_of_os = "";
+    Nodeapi: string = '';
 
     constructor(public firebaseAuth: AngularFireAuth,
                 public toast: Toast,
@@ -34,7 +36,9 @@ export class FirebaseProvider {
                 public platform: Platform,
                 public FCMPlugin: FCM,
                 public http: HttpClient,
-                private db: AngularFirestore) {
+                private db: AngularFirestore,
+                @Inject(APP_CONFIG) public config: AppConfig) {
+        this.Nodeapi = this.config.apiNode;
         //this is for the push Notifications only and only for ios without this the push wont work
         this.firebase.onNotificationOpen().subscribe((data) => {
 
@@ -100,6 +104,7 @@ export class FirebaseProvider {
         });
 
     }
+
     userRegistered(user, email) {
         if (this.platform.is('ios')) {
             this.type_of_os = "ios"
@@ -153,6 +158,23 @@ export class FirebaseProvider {
 
     onToast(data) {
         this.toast.show(JSON.stringify(data), '5000', 'top').subscribe();
+    }
+
+
+    phoneVerification(phoneNumber: String) {
+        const headers = new HttpHeaders({'Content-Type': 'application/json'});
+        this.http.post(this.Nodeapi + "sendsms", {number: phoneNumber}, {headers})
+            .subscribe((data) => {
+
+            }, (err) => {
+
+            });
+    }
+
+    validationCode(code) {
+        const headers = new HttpHeaders({'Content-Type': 'application/json'});
+       return this.http.post(this.Nodeapi + "code", {code: code}, {headers});
+
     }
 
 }

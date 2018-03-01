@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>947181869234-b7tv54pmie49rno1oi0vtu6kocvkf8om.apps.googleusercontent.com</string>
+	<string>947181869234-69vaa0k6utuvh514npm8i76ggaus8fpc.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.947181869234-b7tv54pmie49rno1oi0vtu6kocvkf8om</string>
+	<string>com.googleusercontent.apps.947181869234-69vaa0k6utuvh514npm8i76ggaus8fpc</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBSMeRuZlD5eEM96uE6UwYlXJu81-W6oq4</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,23 +17,23 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>lb.client.space12345</string>
+	<string>lb.client.space</string>
 	<key>PROJECT_ID</key>
 	<string>client-space-mobile</string>
 	<key>STORAGE_BUCKET</key>
 	<string>client-space-mobile.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:947181869234:ios:146168c6a52c6e6f</string>
+	<string>1:947181869234:ios:51962a715c7cb7ae</string>
 	<key>DATABASE_URL</key>
 	<string>https://client-space-mobile.firebaseio.com</string>
 </dict>
