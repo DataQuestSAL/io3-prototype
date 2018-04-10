@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{policy.ProductName}}</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-card>
+        <ion-card-title>
+            <p text-center>Policy Information</p>
+        </ion-card-title>
+        <ion-card-content>
+            <b>Policy No.</b> {{policy.PolicyNo}}/{{policy.ProductName}}
+            <br>
+            <b>Policy Holder.</b> {{policy.HolderName}}
+        </ion-card-content>
+    </ion-card>
+    <ion-footer>
+        <ion-segment  [(ngModel)]="relationship" color="primary" (ionChange)="segmentChanged($event)">
+            <ion-segment-button  *ngFor="let tab of tabs" value="{{tab}}">
+                {{tab}}
+            </ion-segment-button>
+        </ion-segment>
+    </ion-footer>
+</ion-content>

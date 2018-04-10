@@ -1,4 +1,12 @@
-<ion-content class='background'>
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle class="bottom">
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Home</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content class='background' padding>
     <ion-card>
         <ion-card-header>
             {{ 'login' | translate }}
@@ -21,33 +29,37 @@
                     <ion-label>remember me ?</ion-label>
                     <ion-checkbox [(ngModel)]="remember"></ion-checkbox>
                 </ion-item>
-                <a (click)="onForgetPassword()">{{ 'Forgotyourlogindetail' | translate }}<b> {{ 'Gethelpsigningin' | translate }}</b></a>
-                <button ion-button block outline color='light' (click)='Authenticate()' [disabled]="Processing">{{'login' | translate }}
-                </button>
+                <a (click)="onForgetPassword()">{{ 'Forgotyourlogindetail' | translate }}
+                    <b> {{ 'Gethelpsigningin' | translate }}</b>
+                </a>
+
                 <p style="color:white">{{ 'or' | translate }}</p>
-                <button ion-button block color='facebook' (click)="onFacebook()">
-                    <ion-icon name='logo-facebook'></ion-icon>
-                    {{ 'Loginwithfacebook' | translate }}
+                <!--<button ion-button block color='facebook' (click)="onFacebook()">-->
+                    <!--<ion-icon name='logo-facebook'></ion-icon>-->
+                    <!--{{ 'Loginwithfacebook' | translate }}-->
+                <!--</button>-->
+
+
+                <button ion-button block  (click)='Authenticate()' [disabled]="Processing">
+                    {{'login' | translate }}
                 </button>
+
             </ion-list>
+
         </ion-card-content>
     </ion-card>
 
-    <div id="recaptcha-container"></div>
 
-    <button ion-button (click)="onSignInWithPhoneNumber()">Sign in With Phone Number </button>
-
+    <!--<button ion-button (click)="onSignInWithPhoneNumber()">Sign in With Phone Number</button>-->
 
 
 
 
+    <ion-footer>
+        <button (click)='ProceedToRegister()' ion-button clear full color='Light' class="bottom">
+            {{'Donthaveanaccount'|translate}}
+        </button>
+    </ion-footer>
 
 
-
-
-
-
-    <button (click)='ProceedToRegister()' ion-button clear full color='Light' class='bottom'>
-        {{'Donthaveanaccount'|translate}}
-    </button>
 </ion-content>

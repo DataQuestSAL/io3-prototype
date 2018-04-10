@@ -4,7 +4,7 @@ import { ValidationcodePage } from './validationcode';
 
 @NgModule({
   declarations: [
-    ValidationcodePage,
+  //  ValidationcodePage,
   ],
   imports: [
     IonicPageModule.forChild(ValidationcodePage),

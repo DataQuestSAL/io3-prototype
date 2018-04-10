@@ -19,29 +19,31 @@ export class MyApp {
               statusBar: StatusBar,
               splashScreen: SplashScreen,
               kb: Keyboard,translate: TranslateService,
-              private oneSignal: OneSignal) {
+              private oneSignal: OneSignal,
+              ) {
     translate.setDefaultLang('en');
 
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-        this.oneSignal.startInit('9977658b-4e06-4a64-b0f9-c3fadc9eaa72', '947181869234');
+        if (platform.is('ios')||platform.is('android')) {
+            // Okay, so the platform is ready and our plugins are available.
+            // Here you can do any higher level native things you might need.
+            this.oneSignal.startInit('9977658b-4e06-4a64-b0f9-c3fadc9eaa72', '947181869234');
 
-        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+            this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
-        this.oneSignal.registerForPushNotifications();
+            this.oneSignal.registerForPushNotifications();
 
 
-        this.oneSignal.handleNotificationReceived().subscribe(() => {
-            // do something when notification is received
-        });
+            this.oneSignal.handleNotificationReceived().subscribe(() => {
+                // do something when notification is received
+            });
 
-        this.oneSignal.handleNotificationOpened().subscribe(() => {
-            // do something when a notification is opened
-        });
+            this.oneSignal.handleNotificationOpened().subscribe(() => {
+                // do something when a notification is opened
+            });
 
-        this.oneSignal.endInit();
-
+            this.oneSignal.endInit();
+        }
       statusBar.styleDefault();
       splashScreen.hide();
       kb.disableScroll(true);

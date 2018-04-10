@@ -4,7 +4,7 @@ import { ForgetpasswordPage } from './forgetpassword';
 
 @NgModule({
   declarations: [
-    ForgetpasswordPage,
+    //ForgetpasswordPage,
   ],
   imports: [
     IonicPageModule.forChild(ForgetpasswordPage),

@@ -4,7 +4,7 @@ import { PortfolioPage } from './portfolio';
 
 @NgModule({
   declarations: [
-    PortfolioPage,
+   // PortfolioPage,
   ],
   imports: [
     IonicPageModule.forChild(PortfolioPage),

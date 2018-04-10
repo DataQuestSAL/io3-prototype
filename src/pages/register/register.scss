@@ -1,6 +1,6 @@
 page-register {
   .background {
-    background-image: url('../assets/bg.jpg')
+    background-image: url('../assets/bg.jpg');
   }
   //.scroll-content {
   //  align-content: center;
@@ -22,7 +22,7 @@ page-register {
     border: medium none;
   }
   .item {
-    margin-bottom: 10px;
+   // margin-bottom: 10px;
     background: rgba(255, 255, 255, 0.5);
     border: medium none;
     padding: 0px !important;
@@ -66,7 +66,9 @@ page-register {
     border: none ;
   }
 
-
+  form{
+    width: 100% !important;
+  }
 
 
 }

@@ -38,9 +38,14 @@ import {BackgroundMode} from "@ionic-native/background-mode";
 import {HttpClientModule} from "@angular/common/http";
 import {OneSignal} from "@ionic-native/onesignal";
 import {TagsPage} from "../pages/tags/tags";
-import { AngularFirestoreModule } from 'angularfire2/firestore';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {PhonenumberPage} from "../pages/phonenumber/phonenumber";
 import {ValidationcodePage} from "../pages/validationcode/validationcode";
+import {PortfolioinformationPage} from "../pages/portfolioinformation/portfolioinformation";
+import {SpinnerDialog} from "@ionic-native/spinner-dialog";
+import {NativeStorage} from "@ionic-native/native-storage";
+import {NetworkProvider} from '../providers/network';
+import {Network} from "@ionic-native/network";
 
 
 export function createTranslateLoader(http: Http) {
@@ -73,7 +78,8 @@ export const firebaseConfig = {
         ForgetpasswordPage,
         TagsPage,
         PhonenumberPage,
-        ValidationcodePage
+        ValidationcodePage,
+        PortfolioinformationPage
     ],
     imports: [
         BrowserModule,
@@ -110,7 +116,8 @@ export const firebaseConfig = {
         ForgetpasswordPage,
         TagsPage,
         PhonenumberPage,
-        ValidationcodePage
+        ValidationcodePage,
+        PortfolioinformationPage
     ],
     providers: [
         StatusBar,
@@ -133,7 +140,11 @@ export const firebaseConfig = {
         FCM,
         BackgroundMode,
         OneSignal,
-        Firebase
+        Firebase,
+        SpinnerDialog,
+        NativeStorage,
+        NetworkProvider,
+        Network
     ]
 })
 export class AppModule {

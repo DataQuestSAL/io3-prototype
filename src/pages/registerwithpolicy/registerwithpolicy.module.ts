@@ -4,7 +4,7 @@ import { RegisterwithpolicyPage } from './registerwithpolicy';
 
 @NgModule({
   declarations: [
-    RegisterwithpolicyPage,
+   // RegisterwithpolicyPage,
   ],
   imports: [
     IonicPageModule.forChild(RegisterwithpolicyPage),

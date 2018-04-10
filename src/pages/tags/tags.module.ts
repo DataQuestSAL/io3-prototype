@@ -4,7 +4,7 @@ import { TagsPage } from './tags';
 
 @NgModule({
   declarations: [
-    TagsPage,
+   // TagsPage,
   ],
   imports: [
     IonicPageModule.forChild(TagsPage),

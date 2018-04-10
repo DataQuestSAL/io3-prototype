@@ -21,6 +21,10 @@ import {BackgroundMode} from "@ionic-native/background-mode";
 import {OneSignal} from "@ionic-native/onesignal";
 import firebase from 'firebase';
 import {PhonenumberPage} from "../phonenumber/phonenumber";
+import {SpinnerDialog} from "@ionic-native/spinner-dialog";
+import {NativeStorage} from "@ionic-native/native-storage";
+import {NetworkProvider} from "../../providers/network";
+import {Network} from "@ionic-native/network";
 
 
 @Component({
@@ -34,8 +38,7 @@ export class HomePage extends basePage {
     userToken;
     remember: boolean = false;
     type_of_os = "";
-
-
+    Connection;
 
     constructor(public navCtrl: NavController,
                 private toast: Toast,
@@ -52,8 +55,10 @@ export class HomePage extends basePage {
                 public authenticateprovider: AuthenticateProvider,
                 private fb: Facebook,
                 private backgroundMode: BackgroundMode,
-                private oneSignal: OneSignal) {
+                private oneSignal: OneSignal,
+                private nativeStorage: NativeStorage) {
         super();
+
 
         // this.oneSignal.deleteTags(["name", "lastname"])
         this.oneSignal.sendTags({"name": "12", "lastname": "nader"});
@@ -70,10 +75,10 @@ export class HomePage extends basePage {
             }
         });
         Keyboard.disableScroll(true);
-        // this.data.USER_NAME = 'adib';
-        //  this.data.PASSWORD = '454540@EVDQJJX';
-        this.data.USER_NAME = 'amine';
-        this.data.PASSWORD = '243216@OPNLISI';
+        this.data.USER_NAME = 'adib';
+        this.data.PASSWORD = '454540@UPQNJUR';
+        //this.data.USER_NAME = 'amine';
+        //this.data.PASSWORD = '243216@KUWSWLQ';
         this.api.DQNewSession().subscribe((data: any) => {
             this.common.SESSION_ID = data;
         });
@@ -101,24 +106,51 @@ export class HomePage extends basePage {
     Authenticate() {
         // this.user = this.firebaseprovider.login(this.data.USER_NAME, this.data.PASSWORD);
         this.Processing = true;
+
+
         this.authenticateprovider.Authenticate(this.data).subscribe((result: any) => {
             this.Processing = false;
             if (result.Is_Authentic) {
                 if (this.remember === true) {
                     this.storage.set("userInfo1", this.data).then(() => {
                         this.navCtrl.setRoot(PortfolioPage);
+
                     });
                 }
                 else {
-
+                    this.nativeStorage.setItem('user', {name: this.data.USER_NAME, password: this.data.PASSWORD})
+                        .then((data) => {
+                            console.log(JSON.stringify(data));
+                        })
                     this.navCtrl.push(PortfolioPage);
                 }
             }
             else {
                 this.toast.show("Invalid User Name / Password", '2000', 'top').subscribe(() => {
+
                 });
             }
+        }, (err) => {
+            this.nativeStorage.getItem('user')
+                .then(
+                    (data) => {
+                        if (data.name == this.data.USER_NAME && data.password == this.data.PASSWORD) {
+                            this.navCtrl.push(PortfolioPage);
+                        } else {
+                            this.Processing = true;
+                        }
+                    },
+                    (error) => {
+                        console.error(error)
+                    }
+                ).catch(() => {
+                this.toast.show("Invalid User Name / Password", '2000', 'top').subscribe(() => {
+
+                });
+            });
+
         });
+
     }
 
     ProceedToRegister() {
@@ -180,9 +212,7 @@ export class HomePage extends basePage {
         this.navCtrl.push(FirebaseanalyticsPage)
     }
 
-
-
     onSignInWithPhoneNumber() {
-       this.navCtrl.push(PhonenumberPage)
+        this.navCtrl.push(PhonenumberPage)
     }
 }

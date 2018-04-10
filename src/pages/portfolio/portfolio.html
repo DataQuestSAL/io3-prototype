@@ -9,10 +9,10 @@
         <ion-title>Portfolio</ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content>
     <ion-list>
-        <ion-item *ngFor='let policy of policies'>
-            <ion-thumbnail item-start>
+        <ion-item *ngFor='let policy of policies' (click)="onPolicyInformation(policy)">
+            <ion-thumbnail item-start (click)="onPolicy(policy)">
                 <img src="assets/insurance.jpg">
             </ion-thumbnail>
             <h2>{{policy.ProductName}} - {{policy.PolicyNo}}</h2>
